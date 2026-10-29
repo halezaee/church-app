@@ -1,10 +1,10 @@
 // Simple shell cache. Bump VERSION whenever app files change so phones pick up the new build.
-const VERSION = 'sibp-shell-v1.0.0';
+const VERSION = 'sibp-shell-v1.1.0';
 // CDN cache survives app updates (its URLs are pinned to versions); bump only if the pinned versions change.
 const CDN_CACHE = 'sibp-cdn-v1';
 // supabase-js 2.118.0 (same URL as js/api.js) and every module it imports — precached so the app can start offline.
 const CDN_FILES = ['@supabase/supabase-js@2.118.0', '@supabase/auth-js@2.118.0', '@supabase/functions-js@2.118.0', '@supabase/postgrest-js@2.118.0',
-  '@supabase/realtime-js@2.118.0', '@supabase/storage-js@2.118.0', '@supabase/phoenix@0.4.5', 'iceberg-js@0.8.1', 'tslib@2.8.1']
+  '@supabase/realtime-js@2.118.0', '@supabase/storage-js@2.118.0', '@supabase/phoenix@0.4.5', 'iceberg-js@0.8.1', 'tslib@2.8.1', '@simplewebauthn/browser@13.1.0']
   .map(p => `https://cdn.jsdelivr.net/npm/${p}/+esm`);
 const SHELL = ['./','./index.html','./manifest.webmanifest','./logo-sib.png','./icon-192.png','./icon-512.png','./icon-maskable-512.png','./apple-touch-icon.png','./avatar-bible.png','./avatar-candle.png','./avatar-church.png','./avatar-cross.png','./avatar-dove.png','./avatar-fish.png','./avatar-gong.png','./avatar-hands-cross.png','./avatar-hornbill.png','./avatar-kinabalu.png','./avatar-praying-hands.png','./avatar-rafflesia.png'];
 
