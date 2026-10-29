@@ -1,5 +1,5 @@
 // Simple shell cache. Bump VERSION whenever app files change so phones pick up the new build.
-const VERSION = 'sibp-shell-v1.1.5';
+const VERSION = 'sibp-shell-v1.1.6';
 // CDN cache survives app updates (its URLs are pinned to versions); bump only if the pinned versions change.
 const CDN_CACHE = 'sibp-cdn-v1';
 // supabase-js 2.118.0 (same URL as js/api.js) and every module it imports — precached so the app can start offline.
