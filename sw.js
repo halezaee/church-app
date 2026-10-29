@@ -1,5 +1,5 @@
 // Simple shell cache. Bump VERSION whenever app files change so phones pick up the new build.
-const VERSION = 'sibp-shell-v0.7.0';
+const VERSION = 'sibp-shell-v0.8.0';
 const SHELL = ['./','./index.html','./manifest.webmanifest','./logo-sib.png','./icon-192.png','./icon-512.png','./icon-maskable-512.png','./apple-touch-icon.png','./avatar-bible.png','./avatar-candle.png','./avatar-church.png','./avatar-cross.png','./avatar-dove.png','./avatar-fish.png','./avatar-gong.png','./avatar-hands-cross.png','./avatar-hornbill.png','./avatar-kinabalu.png','./avatar-praying-hands.png','./avatar-rafflesia.png'];
 
 self.addEventListener('install', e => {
