@@ -26,7 +26,7 @@
 :root {
   --navy: #2B2F7A; --sky: #1BA8E0; --sky-tint: #E3F4FB; --yellow: #FFF200; --yellow-soft: #FFFBD1; --red: #E31E24; --red-text: #C8161C; --red-tint: #FDECEC;
   --ink: #2B2F7A; --muted: #4A4E78; --line: #D9DBEA; --field: #6B6F9A; --soft: #F3F4FA; --white: #FFFFFF;
-  --s: 1;
+  --s: .88;   /* v1.1.5: everything ~12% smaller (Hale) */
   --tap: max(44px, calc(3rem * var(--s)));   /* 48px tap target at Medium, never below 44px */
   --sp: calc(1rem * var(--s));               /* 16px base spacing */
   --fs: calc(1.125rem * var(--s));        /* 18px body */
@@ -39,8 +39,8 @@
   --safe-b: env(safe-area-inset-bottom, 0px);
   --safe-t: env(safe-area-inset-top, 0px);
 }
-html[data-textsize="small"] { --s: .9; }   /* body 16.2px, buttons 50px */
-html[data-textsize="large"] { --s: 1.2; }  /* body 21.6px, buttons 67px */
+html[data-textsize="small"] { --s: .8; }   /* body 16.2px, buttons 50px */
+html[data-textsize="large"] { --s: 1.05; }  /* body 21.6px, buttons 67px */
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 /* iOS: follow the Dynamic Type (Settings › Display › Text Size) setting */
 @supports (font: -apple-system-body) { html { font: -apple-system-body; } }
