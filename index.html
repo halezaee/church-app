@@ -583,6 +583,10 @@ html[data-textsize="large"] .dob-col-m .dob-opt { font-size: 24px; }   /* still 
 .cgn-section > .btn { margin: 4px 0 12px; }
 .drawer-foot.has-admin .btn span { white-space: nowrap; }
 .drawer-foot.has-admin .btn { gap: 8px; }
+/* v1.2.1: cell group name + member pictures in ONE box */
+.cg-box .cg-faces-in { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; padding-top: 12px; border-top: 2px solid rgba(27,168,224,.35); text-decoration: none; color: var(--navy); }
+.cg-box .cg-see { flex-direction: row-reverse; justify-content: flex-end; }
+.cg-box .face-row { margin-bottom: 0; }
 
 </style>
   <script type="module">
@@ -913,12 +917,12 @@ var kt="sibp-lang",we=localStorage.getItem(kt)||"ms",Ia={},Ve={},hr={ms:{"app.lo
           ${o?`<button class="btn btn-danger-outline ann-del" data-cgn-del="${n(g.id)}" data-cgn-title="${n(g.title)}">${p("trash",{size:24})}<span>${n(a("ann.delete"))}</span></button>`:""}
         </article></li>`).join("")}</ul>`:`<p class="muted">${n(a("cgn.none"))}</p>`}
     </section>`:"";return{title:a("cgTab.title"),html:`<section class="page"><h1>${n(a("cgTab.title"))}</h1>
-      ${i?`<div class="card cg-card">
-          <p class="cg-name">${p("users",{size:30})}<span>${n(i.name)}</span></p></div>
-        <a class="card cg-faces" href="#/cell-group/members" aria-label="${n(a("cgTab.seeAll",{n:s.length}))}">
-          <span class="face-row">${u.map(g=>`<span class="face">${B(g,56)}</span>`).join("")}${h>0?`<span class="face face-more">+${h}</span>`:""}</span>
-          <span class="cg-see">${p("users",{size:24})}<span>${n(a("cgTab.seeAll",{n:s.length}))}</span></span>
-        </a>
+      ${i?`<div class="card cg-card cg-box">
+          <p class="cg-name">${p("users",{size:30})}<span>${n(i.name)}</span></p>
+          <a class="cg-faces cg-faces-in" href="#/cell-group/members" aria-label="${n(a("cgTab.seeAll",{n:s.length}))}">
+            <span class="face-row">${u.map(g=>`<span class="face">${B(g,56)}</span>`).join("")}${h>0?`<span class="face face-more">+${h}</span>`:""}</span>
+            <span class="cg-see">${p("next",{size:22})}<span>${n(a("cgTab.seeAll",{n:s.length}))}</span></span>
+          </a></div>
         ${s.length<=1?`<p class="muted">${n(a("cgTab.empty"))}</p>`:""}`:`<div class="cg-none"><span class="lock-circle">${p("users",{size:44})}</span>
           <h2>${n(a("cgTab.noneTitle"))}</h2><p>${n(a("cgTab.noneBody"))}</p></div>`}
       ${m}
