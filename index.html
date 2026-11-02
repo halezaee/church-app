@@ -994,6 +994,14 @@ h2{position:relative;}
 .rsvp-tab.on{background:#fff;box-shadow:0 1px 1px rgba(43,47,122,.12),0 3px 0 -1px #C6E7F7;}
 .rsvp-tab-n{min-width:1.6em;padding:0 6px;border-radius:999px;background:var(--navy);color:#fff;font-size:.8em;line-height:1.6;}
 .rsvp-tab:not(.on) .rsvp-tab-n{background:#9AA6C4;}
+/* v1.3.31 (Hale): open picture fades into the white box at its bottom edge */
+.ev-img:not(.peek) img { -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent 100%); mask-image: linear-gradient(to bottom, #000 82%, transparent 100%); }
+.ev-img:not(.peek) .ev-img-more { margin-top: -6px; }
+/* v1.3.31 (Hale): Less = text only, navy border + drop shadow */
+.ev-img:not(.peek) .ev-img-more { background: var(--white); color: var(--navy); border: 2px solid var(--navy); box-shadow: 0 4px 10px rgba(43,47,122,.25); padding: 6px 20px; }
+.ev-img:not(.peek) .ev-img-more svg { display: none; }
+/* v1.3.31 (Hale 20:09): Less = plain underlined text, thin border + light shadow, no button fill */
+.ev-img:not(.peek) .ev-img-more { background: transparent; border: 1px solid rgba(43,47,122,.45); box-shadow: 0 2px 6px rgba(43,47,122,.15); min-height: 40px; padding: 4px 14px; border-radius: 8px; text-decoration: underline; text-underline-offset: 3px; font-weight: 700; }
 
 </style>
   <script type="module">
