@@ -1002,6 +1002,10 @@ h2{position:relative;}
 .ev-img:not(.peek) .ev-img-more svg { display: none; }
 /* v1.3.31 (Hale 20:09): Less = plain underlined text, thin border + light shadow, no button fill */
 .ev-img:not(.peek) .ev-img-more { background: transparent; border: 1px solid rgba(43,47,122,.45); box-shadow: 0 2px 6px rgba(43,47,122,.15); min-height: 40px; padding: 4px 14px; border-radius: 8px; text-decoration: underline; text-underline-offset: 3px; font-weight: 700; }
+/* v1.3.32 (Hale): More uses the same style as Less */
+.ev-img-more, .ev-img:not(.peek) .ev-img-more { background: rgba(255,255,255,.6); color: var(--navy); border: 1px solid rgba(43,47,122,.45); box-shadow: 0 2px 6px rgba(43,47,122,.15); min-height: 40px; padding: 4px 14px; border-radius: 8px; text-decoration: underline; text-underline-offset: 3px; font-weight: 700; }
+.ev-img:not(.peek) .ev-img-more { background: transparent; }
+.ev-img-more svg { display: none; }
 
 </style>
   <script type="module">
