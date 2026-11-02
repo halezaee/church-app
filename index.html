@@ -1006,6 +1006,11 @@ h2{position:relative;}
 .ev-img-more, .ev-img:not(.peek) .ev-img-more { background: rgba(255,255,255,.6); color: var(--navy); border: 1px solid rgba(43,47,122,.45); box-shadow: 0 2px 6px rgba(43,47,122,.15); min-height: 40px; padding: 4px 14px; border-radius: 8px; text-decoration: underline; text-underline-offset: 3px; font-weight: 700; }
 .ev-img:not(.peek) .ev-img-more { background: transparent; }
 .ev-img-more svg { display: none; }
+/* v1.3.34 (Hale): chosen RSVP = no yellow ring, tick badge instead of the word */
+.rsvp-btn.selected { box-shadow: none; }
+.sel-tick { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; background: #fff; color: var(--navy); box-shadow: 0 1px 4px rgba(0,0,0,.18); }
+.sel-tick .ic { color: var(--navy) !important; stroke-width: 3; }
+.btn-notgoing.selected .sel-tick .ic { color: var(--red-text) !important; }
 
 </style>
   <script type="module">
@@ -1237,7 +1242,7 @@ var ut="sibp-lang",Ca=localStorage.getItem(ut)||"ms",on={},ge={},os={ms:{"app.lo
            <button class="btn btn-primary" data-request>${u("send",{size:26})}<span>${t(e("amg.request"))}</span></button>
            <p class="muted center">${t(e("amg.requestHelp"))}</p>`}
     </section>`,mount(s){s.querySelector("[data-request]")?.addEventListener("click",async o=>{o.currentTarget.disabled=!0,await fi(),f(e("amg.requestSent")),a.render({keepScroll:!0})}),s.querySelector("[data-cancel-req]")?.addEventListener("click",async()=>{await N({title:e("amg.cancelQ"),ok:e("amg.cancelRequest"),cancel:e("common.keep")})&&(await yi(),f(e("amg.cancelled")),a.render({keepScroll:!0}))})}}}async function wr(a){let n=await qa(a.params.id);if(!n)return a.navigate("rsvp"),{html:""};let i=await ai(n.id),r=await xa(n.id),s=ae(a.user,n),o=n.cancelled||new Date>new Date(n.rsvp_deadline),d=(c,h,m)=>{let p=i?.status===c;return`<button class="btn rsvp-btn ${h} ${p?"selected":""}" data-status="${c}" aria-pressed="${p}" ${o?"disabled":""}>
-      ${u(p?"check":m,{size:28})}<span>${t(e("rsvp."+c))}</span>${p?`<span class="sel-tag">${t(e("rsvp.selected"))}</span>`:""}</button>`},l=i?.guests||0;return{title:n.title,html:`<section class="page">${q("#/rsvp",e("common.back"))}
+      ${u(m,{size:28})}<span>${t(e("rsvp."+c))}</span>${p?`<span class="sel-tick">${u("check",{size:22})}<span class="sr-only">${t(e("rsvp.selected"))}</span></span>`:""}</button>`},l=i?.guests||0;return{title:n.title,html:`<section class="page">${q("#/rsvp",e("common.back"))}
       ${n.image?`<figure class="ev-img peek" data-evimg><img src="${t(n.image)}" alt="${t(e("evImg.alt",{title:n.title}))}">
         <button type="button" class="ev-img-more" data-evimg-more aria-expanded="false">${u("image",{size:22})}<span>${t(e("evImg.more"))}</span></button></figure>`:""}
       ${Da(n.category)}
@@ -1327,7 +1332,7 @@ var ut="sibp-lang",Ca=localStorage.getItem(ut)||"ms",on={},ge={},os={ms:{"app.lo
         <div class="segs segs-3">${Ma("role","member",n.role,e("role.member"))}${Ma("role","admin",n.role,e("role.admin"))}${Ma("role","owner",n.role,e("role.owner"))}</div>
       </div>`:""}
 
-      <p class="center muted small-print">Portal SIB Sabah \xB7 ${t(e("profile.version"))} 1.3.33</p>
+      <p class="center muted small-print">Portal SIB Sabah \xB7 ${t(e("profile.version"))} 1.3.34</p>
     </section>`,mount(g){Pr(g,a),g.querySelectorAll("[data-role]").forEach(y=>y.addEventListener("click",async()=>{Mt(y.dataset.role),await a.render({keepScroll:!0}),f(e("demo.roleSet",{role:e("role."+y.dataset.role)}))})),g.querySelectorAll("[data-acct]").forEach(y=>y.addEventListener("click",async()=>{let P=await Ot(y.dataset.acct);await a.render({keepScroll:!0}),P&&f(e("demo.accountSet",{name:P.name}))})),g.querySelector("[data-passkey]")?.addEventListener("click",async()=>{let y=await Ee();y?.ok?f(e("done.passkeyOn")):y?.cancelled||f(e("err.passkey_failed"),"warn")}),g.querySelector("[data-reset]")?.addEventListener("click",async()=>{await N({title:e("demo.resetQ"),ok:e("demo.reset")})&&(await Pi(),f(e("demo.resetDone")),a.render())})}}}async function rt(a){let n=a.user,i=await Nn(),r=Y(),s=await V(n.church_id),o=s.find(h=>h.id===n.cellGroupId),d=await Za(n),l=o?o.id:n.cell_group_confirmed_at?null:void 0,c=await li();return{title:e("profile.editTitle"),html:`<section class="page">${q("#/profile",e("common.backProfile"))}
       <h1>${t(e("profile.editTitle"))}</h1>
       ${c===null?"":`<p class="edit-left ${c?"":"is-zero"}" role="status">${u(c?"info":"clock",{size:24})}<span>${t(c?e("editLimit.left",{n:c}):e("err.edit_limit"))}</span></p>`}
