@@ -1,5 +1,5 @@
 // Simple shell cache. Bump VERSION whenever app files change so phones pick up the new build.
-const VERSION = 'sibp-shell-v1.3.25';
+const VERSION = 'sibp-shell-v1.3.26';
 // CDN cache survives app updates (its URLs are pinned to versions); bump only if the pinned versions change.
 const CDN_CACHE = 'sibp-cdn-v1';
 // supabase-js 2.118.0 (same URL as js/api.js) and every module it imports — precached so the app can start offline.
@@ -40,5 +40,21 @@ self.addEventListener('fetch', e => {
     const hit = await c.match(req);
     const net = fetch(req).then(r => { if (r.ok) c.put(req, r.clone()); return r; }).catch(() => hit);
     return hit || net;
+  }));
+});
+
+// v1.3.26: phone notifications for new events / announcements (sent by Edge Function push-send).
+self.addEventListener('push', e => {
+  let d = {}; try { d = e.data ? e.data.json() : {}; } catch { d = { body: e.data && e.data.text() }; }
+  e.waitUntil(self.registration.showNotification(d.title || 'Portal SIB Sabah', {
+    body: d.body || '', tag: d.tag, icon: './icon-192.png', badge: './icon-192.png', data: { url: d.url || '#/' },
+  }));
+});
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  const target = new URL('./' + (e.notification.data?.url || ''), self.registration.scope).href;
+  e.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(list => {
+    for (const c of list) { if ('focus' in c) { c.navigate(target).catch(() => {}); return c.focus(); } }
+    return self.clients.openWindow(target);
   }));
 });
