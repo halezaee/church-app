@@ -1655,7 +1655,8 @@ a.option { text-decoration: none; }
 .ann-cm-edit textarea { width: 100%; font: inherit; font-size: 18px; padding: 8px; border: 2px solid var(--line, #c9cde0); border-radius: 10px; background: var(--card, #fff); color: inherit; }
 .ann-cm-edit-btns { display: flex; gap: 8px; margin-top: 6px; }
 .ann-cm-edit-btns .btn { margin: 0; flex: 1; }
-.fp-spam { margin: -4px 0 14px; font-size: 17px; }
+.fp-spam { margin: -4px 0 14px; font-size: 19px; font-weight: 700; }
+.note p.spam-b { font-weight: 700; font-size: 1.12em; }
 /* v1.3.88 church gallery */
 .chgal { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
 .chgal-tile { padding: 0; border: 0; border-radius: 14px; overflow: hidden; aspect-ratio: 1; background: var(--card, #fff); cursor: pointer; box-shadow: 0 2px 8px rgba(43,47,122,.12); }
@@ -2159,7 +2160,7 @@ var Mi="sibp-lang",Ka=localStorage.getItem(Mi)||"ms",me={},Fa={},Rl={ms:{"app.lo
       <p class="center small-print">${t(n("fp.adminHelp"))}</p></div>`,mount(c){c.querySelectorAll("[data-ch]").forEach(d=>d.addEventListener("click",async()=>{c.querySelectorAll("[data-ch]").forEach(m=>m.disabled=!0),O(c,"");try{await o(c,d.dataset.ch),k(n("reg.codeSent")),a.navigate("forgot/2")}catch(m){c.querySelectorAll("[data-ch]").forEach(h=>h.disabled=!1),O(c,n(ya(m)))}}))}};if(i===2)return{title:n("reg.codeTitle"),html:`<div class="auth">${s("#/forgot/1")}
       <h1>${t(n("reg.codeTitle"))}</h1>
       <p class="lead">${t(n(r.channel==="whatsapp"?"reg.codeSentWa":"reg.codeSentEmail",{to:r.sentTo}))}</p>
-      ${r.channel==="email"?`<div class="note">${u("mail",{size:26})}<p>${t(n("reg.checkSpam"))}</p></div>`:""}
+      ${r.channel==="email"?`<div class="note">${u("mail",{size:26})}<p class="spam-b">${t(n("reg.checkSpam"))}</p></div>`:""}
       <form data-form novalidate>
         <label class="field-label" for="code">${t(n("reg.codeLabel"))}</label>
         <input class="input code-input" id="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="\\d{6}" placeholder="\u2022\u2022\u2022\u2022\u2022\u2022">
@@ -2215,7 +2216,7 @@ var Mi="sibp-lang",Ka=localStorage.getItem(Mi)||"ms",me={},Fa={},Rl={ms:{"app.lo
     </div>`,mount(i){i.querySelectorAll("[data-ch]").forEach(r=>r.addEventListener("click",async()=>{i.querySelectorAll("[data-ch]").forEach(o=>o.disabled=!0),O(i,"");let s;try{s=await kt({...e,channel:r.dataset.ch})}catch(o){return i.querySelectorAll("[data-ch]").forEach(l=>l.disabled=!1),O(i,n(ya(o)))}xa({...e,channel:r.dataset.ch,sentTo:s.sentTo,sentAt:Date.now(),testMode:!!s.testMode}),k(n("reg.codeSent")),a.navigate("register/4")}))}}}function fd(a,e){let i=e.channel==="whatsapp"?F(e.sentTo):e.sentTo;return{title:n("reg.codeTitle"),html:`<div class="auth">${Ie(4,"#/register/3")}
       <h1>${t(n("reg.codeTitle"))}</h1>
       <p class="lead">${t(n(e.channel==="whatsapp"?"reg.codeSentWa":"reg.codeSentEmail",{to:i}))}</p>
-      ${e.channel==="email"?`<div class="note">${u("mail",{size:26})}<p>${t(n("reg.checkSpam"))}</p></div>`:""}
+      ${e.channel==="email"?`<div class="note">${u("mail",{size:26})}<p class="spam-b">${t(n("reg.checkSpam"))}</p></div>`:""}
       <form data-form novalidate>
         <label class="field-label" for="code">${t(n("reg.codeLabel"))}</label>
         <input class="input code-input" id="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="\\d{6}" placeholder="\u2022\u2022\u2022\u2022\u2022\u2022">
@@ -2292,7 +2293,7 @@ var Mi="sibp-lang",Ka=localStorage.getItem(Mi)||"ms",me={},Fa={},Rl={ms:{"app.lo
         <div class="segs segs-3">${Ra("role","member",e.role,n("role.member"))}${Ra("role","admin",e.role,n("role.admin"))}${Ra("role","owner",e.role,n("role.owner"))}</div>
       </div>`:""}
 
-      <p class="center muted small-print">Portal SIB Sabah \xB7 ${t(n("profile.version"))} 1.3.92</p>
+      <p class="center muted small-print">Portal SIB Sabah \xB7 ${t(n("profile.version"))} 1.3.93</p>
     </section>`,mount(f){rl(f,a),f.querySelectorAll("[data-role]").forEach($=>$.addEventListener("click",async()=>{Ui($.dataset.role),await a.render({keepScroll:!0}),k(n("demo.roleSet",{role:n("role."+$.dataset.role)}))})),f.querySelectorAll("[data-acct]").forEach($=>$.addEventListener("click",async()=>{let v=await tr($.dataset.acct);await a.render({keepScroll:!0}),v&&k(n("demo.accountSet",{name:v.name}))})),f.querySelector("[data-passkey]")?.addEventListener("click",async()=>{let $=await nn();$?.ok?k(n("done.passkeyOn")):$?.cancelled||k(n("err.passkey_failed"),"warn")}),f.querySelector("[data-reset]")?.addEventListener("click",async()=>{await z({title:n("demo.resetQ"),ok:n("demo.reset")})&&(await as(),k(n("demo.resetDone")),a.render())})}}}async function wi(a){let e=a.user,i=await Tt(),r=X(),s=await ea(e.church_id),o=s.find(m=>m.id===e.cellGroupId),l=await ye(e),c=o?o.id:e.cell_group_confirmed_at?null:void 0,d=await Pr();return{title:n("profile.editTitle"),html:`<section class="page">${j("#/profile",n("common.backProfile"))}
       <h1>${t(n("profile.editTitle"))}</h1>
       ${d===null?"":`<p class="edit-left ${d?"":"is-zero"}" role="status">${u(d?"info":"clock",{size:24})}<span>${t(d?n("editLimit.left",{n:d}):n("err.edit_limit"))}</span></p>`}
