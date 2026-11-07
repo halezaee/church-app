@@ -1,5 +1,5 @@
 // Simple shell cache. Bump VERSION whenever app files change so phones pick up the new build.
-const VERSION = 'sibp-shell-v1.3.130';
+const VERSION = 'sibp-shell-v1.3.131';
 // CDN cache survives app updates (its URLs are pinned to versions); bump only if the pinned versions change.
 const CDN_CACHE = 'sibp-cdn-v1';
 // supabase-js 2.118.0 (same URL as js/api.js) and every module it imports — precached so the app can start offline.
@@ -30,11 +30,11 @@ self.addEventListener('fetch', e => {
     }
     return;
   }
-  // v1.3.130: only the app page itself comes from the saved copy; PDFs, the APK and other files open normally.
+  // v1.3.131: only the app page itself comes from the saved copy; PDFs, the APK and other files open normally.
   const isAppPage = /\/(index\.html)?$/.test(url.pathname);
   if (req.mode === 'navigate' && !isAppPage) return;
   if (req.mode === 'navigate') {
-    // v1.3.130 (speed): open straight from this version's saved copy; network only when nothing is saved yet.
+    // v1.3.131 (speed): open straight from this version's saved copy; network only when nothing is saved yet.
     // A new release ships a new sw.js, which saves the new page and takes over; the app then reloads at the next tap.
     e.respondWith(caches.open(VERSION).then(async c => (await c.match('./index.html')) || fetch(req).catch(() => caches.match('./index.html'))));
     return;
