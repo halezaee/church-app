@@ -1946,6 +1946,12 @@ html[data-theme="dark"] .lang-opt:not(.on) { color: #E8EAFF; box-shadow: inset 0
 .brand .brand-logo, .brand .brand-name { display: flex; align-items: center; text-decoration: none; color: inherit; min-height: var(--tap); min-width: 0; }
 .brand .brand-logo { flex: none; }
 .brand img { width: min(calc(54px * var(--s)), 60px); height: min(calc(54px * var(--s)), 60px); }
+/* v1.3.129 (Hale): theme banner keeps a deep navy background in dark mode too (var(--navy) turns light there) */
+.sbp-hero { background: linear-gradient(160deg, #2B2F7A 0%, #1F5FA6 100%); color: #fff; box-shadow: 0 6px 18px rgba(20,30,80,.25); }
+.sbp-hero .sbp-theme { color: #fff; }
+.sbp-hero .sbp-label { color: #FFF200; }
+@media (prefers-color-scheme: dark) { .sbp-hero { border: 1px solid rgba(255,255,255,.18); } }
+:root[data-theme="dark"] .sbp-hero, .dark .sbp-hero { border: 1px solid rgba(255,255,255,.18); }
 
 </style>
   <script type="module">
@@ -2682,7 +2688,7 @@ Kawasan: {area}`,"stream.label":"Live-stream link (optional)","stream.help":"Pas
         <div class="segs segs-3">${ae("role","member",e.role,t("role.member"))}${ae("role","admin",e.role,t("role.admin"))}${ae("role","owner",e.role,t("role.owner"))}</div>
       </div>`:""}
 
-      <p class="center muted small-print">Portal SIB Sabah \xB7 ${n(t("profile.version"))} 1.3.128</p>
+      <p class="center muted small-print">Portal SIB Sabah \xB7 ${n(t("profile.version"))} 1.3.129</p>
     </section>`,mount(v){Vl(v,a),v.querySelectorAll("[data-role]").forEach(w=>w.addEventListener("click",async()=>{ki(w.dataset.role),await a.render({keepScroll:!0}),k(t("demo.roleSet",{role:t("role."+w.dataset.role)}))})),v.querySelectorAll("[data-acct]").forEach(w=>w.addEventListener("click",async()=>{let x=await xi(w.dataset.acct);await a.render({keepScroll:!0}),x&&k(t("demo.accountSet",{name:x.name}))})),v.querySelector("[data-passkey]")?.addEventListener("click",async()=>{let w=await yt();w?.ok?k(t("done.passkeyOn")):w?.cancelled||k(t("err.passkey_failed"),"warn")}),v.querySelector("[data-reset]")?.addEventListener("click",async()=>{await D({title:t("demo.resetQ"),ok:t("demo.reset")})&&(await Cs(),k(t("demo.resetDone")),a.render())})}}}async function Yr(a){let e=a.user,r=await Vn(),i=aa(),s=await oa(e.church_id),o=s.find(h=>h.id===e.cellGroupId),l=await Le(e),c=o?o.id:e.cell_group_confirmed_at?null:void 0,d=await is();return{title:t("profile.editTitle"),html:`<section class="page">${q("#/profile",t("common.backProfile"))}
       <h1>${n(t("profile.editTitle"))}</h1>
       ${d===null?"":`<p class="edit-left ${d?"":"is-zero"}" role="status">${u(d?"info":"clock",{size:24})}<span>${n(d?t("editLimit.left",{n:d}):t("err.edit_limit"))}</span></p>`}
