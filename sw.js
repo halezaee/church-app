@@ -1,12 +1,12 @@
 // Simple shell cache. Bump VERSION whenever app files change so phones pick up the new build.
-const VERSION = 'sibp-shell-v1.3.118';
+const VERSION = 'sibp-shell-v1.3.119';
 // CDN cache survives app updates (its URLs are pinned to versions); bump only if the pinned versions change.
 const CDN_CACHE = 'sibp-cdn-v1';
 // supabase-js 2.118.0 (same URL as js/api.js) and every module it imports — precached so the app can start offline.
 const CDN_FILES = ['@supabase/supabase-js@2.118.0', '@supabase/auth-js@2.118.0', '@supabase/functions-js@2.118.0', '@supabase/postgrest-js@2.118.0',
   '@supabase/realtime-js@2.118.0', '@supabase/storage-js@2.118.0', '@supabase/phoenix@0.4.5', 'iceberg-js@0.8.1', 'tslib@2.8.1', '@simplewebauthn/browser@13.1.0']
   .map(p => `https://cdn.jsdelivr.net/npm/${p}/+esm`);
-const SHELL = ['./','./index.html','./manifest.webmanifest','./logo-sib.png','./icon-192.png','./icon-512.png','./icon-maskable-512.png','./apple-touch-icon.png','./avatar-bible.png','./avatar-candle.png','./avatar-church.png','./avatar-cross.png','./avatar-dove.png','./avatar-fish.png','./avatar-gong.png','./avatar-hands-cross.png','./avatar-hornbill.png','./avatar-kinabalu.png','./avatar-praying-hands.png','./avatar-rafflesia.png'];
+const SHELL = ['./','./index.html','./manifest.webmanifest','./logo-sib.png','./icon-192.png','./icon-512.png','./icon-maskable-512.png','./apple-touch-icon.png','./avatar-bible.png','./avatar-candle.png','./avatar-church.png','./avatar-cross.png','./avatar-dove.png','./avatar-fish.png','./avatar-gong.png','./avatar-hands-cross.png','./avatar-hornbill.png','./avatar-kinabalu.png','./avatar-praying-hands.png','./avatar-rafflesia.png','./inl-00642457f5.jpg','./inl-2aff89396d.jpg','./inl-650b6f5d6e.jpg','./inl-77c3124ae4.jpg','./inl-b8036f795a.jpg','./inl-d5ac7572d3.jpg'];
 
 self.addEventListener('install', e => {
   e.waitUntil(Promise.all([
@@ -31,8 +31,9 @@ self.addEventListener('fetch', e => {
     return;
   }
   if (req.mode === 'navigate') {
-    // network first for the page, fall back to cached shell when offline
-    e.respondWith(fetch(req).catch(() => caches.match('./index.html')));
+    // v1.3.119 (speed): open straight from this version's saved copy; network only when nothing is saved yet.
+    // A new release ships a new sw.js, which saves the new page and takes over; the app then reloads at the next tap.
+    e.respondWith(caches.open(VERSION).then(async c => (await c.match('./index.html')) || fetch(req).catch(() => caches.match('./index.html'))));
     return;
   }
   // stale-while-revalidate for shell files
