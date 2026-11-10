@@ -18,6 +18,7 @@
   <!-- Text size (Small/Medium/Large) applied before first paint so there is no flash. Same logic as ui.js getTextSize(). -->
   <script>try{var z=localStorage.getItem('sibp-textsize');if(['small','medium','large'].indexOf(z)<0)z=localStorage.getItem('sibp-big-text')==='1'?'large':'medium';document.documentElement.setAttribute('data-textsize',z)}catch(e){document.documentElement.setAttribute('data-textsize','medium')}</script>
   <!-- v1.3.55 Theme (Auto/Light/Dark) applied before first paint. Same logic as ui.js applyTheme(). -->
+  <script>/* v1.3.146 (Hale): Android app (APK / installed) draws under the gesture bar; mark it so CSS keeps the menu above it */(function(){try{var sa=/Android/i.test(navigator.userAgent)&&(matchMedia('(display-mode: standalone)').matches||matchMedia('(display-mode: fullscreen)').matches||document.referrer.indexOf('android-app://')===0);if(sa)document.documentElement.classList.add('android-app')}catch(e){}})();</script>
   <script>(function(){function a(){var v='auto';try{v=localStorage.getItem('sibp-theme')||'auto'}catch(e){}var h=new Date().getHours();var d=v==='dark'||(v!=='light'&&(h>=19||h<7));document.documentElement.setAttribute('data-theme',d?'dark':'light');var m=document.querySelector('meta[name=theme-color]');if(m)m.setAttribute('content',d?'#12142A':'#2B2F7A')}a();setInterval(a,60000);document.addEventListener('visibilitychange',function(){if(!document.hidden)a()});window.__sibpTheme=a})();</script>
   <style>
 /* SIB Piasau — minimalist, elderly-friendly. Colours from the logo.
@@ -41,6 +42,8 @@
   --safe-b: env(safe-area-inset-bottom, 0px);
   --safe-t: env(safe-area-inset-top, 0px);
 }
+/* v1.3.146 (Hale): Android APK gives no bottom inset, so the gesture bar covered the menu labels */
+html.android-app { --safe-b: max(env(safe-area-inset-bottom, 0px), 22px); }
 html[data-textsize="small"] { --s: .8; }   /* body 16.2px, buttons 50px */
 html[data-textsize="large"] { --s: 1.05; }  /* body 21.6px, buttons 67px */
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
@@ -2503,7 +2506,7 @@ Kawasan: {area}`,"stream.label":"Live-stream link (optional)","stream.help":"Pas
       <div class="rsvp-tabs home-tabs" role="tablist">${l("shalom","heart",t("fs.shalom"),o.length)}${l("ann","megaphone",t("ann.section"),i.n)}${l("news","calendar",t("gn.title"),d)}</div>
       <div id="hpanel-shalom" role="tabpanel" aria-labelledby="htab-shalom" data-hpanel="shalom" ${c==="shalom"?"":"hidden"}>${ac(o)}</div>
       <div id="hpanel-ann" role="tabpanel" aria-labelledby="htab-ann" data-hpanel="ann" ${c==="ann"?"":"hidden"}>${i.html}</div>
-      <div id="hpanel-news" role="tabpanel" aria-labelledby="htab-news" data-hpanel="news" ${c==="news"?"":"hidden"}>${lm(r,a.user)}</div></section>`,mount(m){Vu(m),un(m,a),wl(m),ec(m,a),m.querySelectorAll("[data-htab]").forEach(h=>h.addEventListener("click",()=>{let p=h.dataset.htab;sessionStorage.setItem("sibp-home-tab",p),m.querySelectorAll("[data-htab]").forEach(g=>{let y=g.dataset.htab===p;g.classList.toggle("on",y),g.setAttribute("aria-selected",y)}),m.querySelectorAll("[data-hpanel]").forEach(g=>{g.hidden=g.dataset.hpanel!==p})}))}}}var rc="1.3.145";function tc(){let a=(new Date().getUTCHours()+8)%24;return a>=5&&a<7?"dawn":a<11&&a>=7?"morning":a>=11&&a<15?"noon":a>=15&&a<19?"sunset":"night"}function Wu(a){let e=s=>n(J(s,{day:"numeric",month:"short"})),i=(s,o,c,l,d,m)=>`<li>${m?`<a class="nf-row" href="${m}">`:'<div class="nf-row">'}
+      <div id="hpanel-news" role="tabpanel" aria-labelledby="htab-news" data-hpanel="news" ${c==="news"?"":"hidden"}>${lm(r,a.user)}</div></section>`,mount(m){Vu(m),un(m,a),wl(m),ec(m,a),m.querySelectorAll("[data-htab]").forEach(h=>h.addEventListener("click",()=>{let p=h.dataset.htab;sessionStorage.setItem("sibp-home-tab",p),m.querySelectorAll("[data-htab]").forEach(g=>{let y=g.dataset.htab===p;g.classList.toggle("on",y),g.setAttribute("aria-selected",y)}),m.querySelectorAll("[data-hpanel]").forEach(g=>{g.hidden=g.dataset.hpanel!==p})}))}}}var rc="1.3.146";function tc(){let a=(new Date().getUTCHours()+8)%24;return a>=5&&a<7?"dawn":a<11&&a>=7?"morning":a>=11&&a<15?"noon":a>=15&&a<19?"sunset":"night"}function Wu(a){let e=s=>n(J(s,{day:"numeric",month:"short"})),i=(s,o,c,l,d,m)=>`<li>${m?`<a class="nf-row" href="${m}">`:'<div class="nf-row">'}
     <span class="nf-ic ${o}">${u(s,{size:24})}</span>
     <span class="nf-body"><span class="nf-head">${n(c)}${d?` <span class="nf-when">\xB7 ${d}</span>`:""}</span><span class="nf-text">${l}</span></span>
     ${m?`${u("next",{size:22,cls:"chev"})}</a>`:"</div>"}</li>`,r=[];return a?.church&&r.push(i("church","nf-church",t("flash.church"),`<b>${n(a.church.name)}</b>${a.church.place?` - ${n(a.church.place)}`:""}`,e(a.church.at),`#/church/${n(a.church.id)}`)),a?.member&&r.push(i("userPlus","nf-member",t("flash.member"),`<b>${n(a.member.name)}</b>`,e(a.member.at),`#/member/${n(a.member.id)}`)),r.length?`<section class="card newsflash" aria-label="${n(t("flash.title"))}">
@@ -2797,7 +2800,7 @@ Kawasan: {area}`,"stream.label":"Live-stream link (optional)","stream.help":"Pas
         <div class="segs segs-3">${ae("role","member",e.role,t("role.member"))}${ae("role","admin",e.role,t("role.admin"))}${ae("role","owner",e.role,t("role.owner"))}</div>
       </div>`:""}
 
-      <p class="center muted small-print">Portal SIB Sabah \xB7 ${n(t("profile.version"))} 1.3.145</p>
+      <p class="center muted small-print">Portal SIB Sabah \xB7 ${n(t("profile.version"))} 1.3.146</p>
     </section>`,mount(v){_c(v,a),v.querySelectorAll("[data-role]").forEach(A=>A.addEventListener("click",async()=>{qr(A.dataset.role),await a.render({keepScroll:!0}),b(t("demo.roleSet",{role:t("role."+A.dataset.role)}))})),v.querySelectorAll("[data-acct]").forEach(A=>A.addEventListener("click",async()=>{let P=await Gr(A.dataset.acct);await a.render({keepScroll:!0}),P&&b(t("demo.accountSet",{name:P.name}))})),v.querySelector("[data-passkey]")?.addEventListener("click",async()=>{let A=await At();A?.ok?b(t("done.passkeyOn")):A?.cancelled||b(t("err.passkey_failed"),"warn")}),v.querySelector("[data-reset]")?.addEventListener("click",async()=>{await D({title:t("demo.resetQ"),ok:t("demo.reset")})&&(await Fs(),b(t("demo.resetDone")),a.render())})}}}async function ir(a){let e=a.user,i=await ri(),r=ta(),s=await la(e.church_id),o=s.find(m=>m.id===e.cellGroupId),c=await Ne(e),l=o?o.id:e.cell_group_confirmed_at?null:void 0,d=await ys();return{title:t("profile.editTitle"),html:`<section class="page">${N("#/profile",t("common.backProfile"))}
       <h1>${n(t("profile.editTitle"))}</h1>
       ${d===null?"":`<p class="edit-left ${d?"":"is-zero"}" role="status">${u(d?"info":"clock",{size:24})}<span>${n(d?t("editLimit.left",{n:d}):t("err.edit_limit"))}</span></p>`}
